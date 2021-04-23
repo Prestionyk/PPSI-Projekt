@@ -19,7 +19,7 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             IEnumerable<Thread> objList = _db.Thread;
 
@@ -27,13 +27,14 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
-            return View();
+            var obj = _db.Thread.Find(id);
+            return View(obj);
         }
 
         // GET: PostController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -41,7 +42,7 @@ namespace Forum_App.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Thread newItem)
+        public IActionResult Create(Thread newItem)
         {
             try
             {
@@ -60,19 +61,26 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            return View();
+            var obj = _db.Thread.Find(id);
+            return View(obj);
         }
 
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(Thread obj)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _db.Post.Update(obj);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(obj);
             }
             catch
             {
@@ -81,19 +89,37 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.Thread.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
         }
 
         // POST: PostController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeletePost(Thread obj)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                if (obj == null)
+                {
+                    return NotFound("Null");
+                }
+                _db.Thread.Remove(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
             catch
             {

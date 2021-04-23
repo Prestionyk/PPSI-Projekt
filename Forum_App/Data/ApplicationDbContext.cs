@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Forum_App.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace Forum_App.Data
             : base(options)
         {
         }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Thread> Thread { get; set; }
     }
 }

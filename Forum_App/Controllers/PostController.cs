@@ -48,6 +48,8 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    newItem.CreateDate = DateTime.UtcNow;
+                    newItem.ModifyDate = newItem.CreateDate;
                     _db.Post.Add(newItem);
                     _db.SaveChanges();
                     return RedirectToAction(nameof(Index));
@@ -76,6 +78,7 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    obj.ModifyDate = DateTime.UtcNow;
                     _db.Post.Update(obj);
                     _db.SaveChanges();
                     return RedirectToAction("Index");

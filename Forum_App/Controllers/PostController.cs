@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Forum_App.Controllers
 {
@@ -22,13 +21,13 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string query)
         {
             IEnumerable<Thread> objList = _db.Thread;
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(query))
             {
-                objList = objList.Where(s => s.Title.Contains(searchString));
+                objList = objList.Where(s => s.Title.Contains(query));
             }
 
             return View(objList);

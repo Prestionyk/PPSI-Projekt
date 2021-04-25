@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<Forum_App.Models.Thread>
-
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "Posts";
+    string userString = null;
+    if(User.Identity.IsAuthenticated)
+        userString = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 }
 
 <h1>Posts</h1>
@@ -11,7 +14,7 @@
 </p>
 <form asp-controller="Post" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="SearchString" />
+        Title: <input type="text" name="query" />
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -62,9 +65,17 @@
                             @Html.DisplayFor(modelItem => item.ModifyDate)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Post_ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Post_ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Post_ID">Delete</a>
+                            @if (userString != null && userString == item.User_ID)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Post_ID">Edit</a>
+                                @Html.Raw("|")
+                            }
+                            <a asp-action="Details" asp-route-id="@item.Post_ID">Details</a>
+                            @if (userString != null && userString == item.User_ID)
+                            {
+                                @Html.Raw("|")
+                                <a asp-action="Delete" asp-route-id="@item.Post_ID">Delete</a>
+                            }
                         </td>
                     </tr>
                 }

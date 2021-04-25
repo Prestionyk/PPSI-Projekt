@@ -70,7 +70,6 @@ namespace Forum_App.Controllers
                 return View();
             }
         }
-
         // GET: PostController/Edit/5
         public IActionResult Edit(int id)
         {

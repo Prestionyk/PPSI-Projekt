@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Forum_App.Controllers
@@ -48,6 +49,7 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    newItem.User_ID = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                     newItem.CreateDate = DateTime.UtcNow;
                     newItem.ModifyDate = newItem.CreateDate;
                     _db.Post.Add(newItem);

@@ -56,7 +56,7 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    newItem.User_ID = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    newItem.User_ID = User.Identity.Name;
                     newItem.CreateDate = DateTime.UtcNow;
                     newItem.ModifyDate = newItem.CreateDate;
                     _db.Post.Add(newItem);
@@ -74,7 +74,9 @@ namespace Forum_App.Controllers
         public IActionResult Edit(int id)
         {
             var obj = _db.Thread.Find(id);
-            return View(obj);
+            if(User.Identity.IsAuthenticated && obj.User_ID == User.Identity.Name)
+                return View(obj);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: PostController/Edit/5

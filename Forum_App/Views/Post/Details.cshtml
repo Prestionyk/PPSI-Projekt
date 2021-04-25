@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
     string userString = null;
     if (User.Identity.IsAuthenticated)
-        userString = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        userString = User.Identity.Name;
 }
 
 <h1>Details</h1>
@@ -46,7 +46,7 @@
     </dl>
 </div>
 <div>
-    @if (userString != null && userString == Model.User_ID)
+    @if (userString == Model.User_ID)
     {
         <a asp-action="Edit" asp-route-id="@Model.Post_ID">Edit</a>
         @Html.Raw("|")

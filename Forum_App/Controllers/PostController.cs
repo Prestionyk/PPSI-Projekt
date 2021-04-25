@@ -1,7 +1,9 @@
 ﻿using Forum_App.Data;
 using Forum_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,14 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             IEnumerable<Thread> objList = _db.Thread;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                objList = objList.Where(s => s.Title.Contains(searchString));
+            }
 
             return View(objList);
         }
@@ -34,6 +41,7 @@ namespace Forum_App.Controllers
             return View(obj);
         }
 
+        [Authorize]
         // GET: PostController/Create
         public IActionResult Create()
         {

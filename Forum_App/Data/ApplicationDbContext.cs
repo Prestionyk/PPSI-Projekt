@@ -15,5 +15,6 @@ namespace Forum_App.Data
         }
         public DbSet<Post> Post { get; set; }
         public DbSet<Thread> Thread { get; set; }
+        public DbSet<Comment> Comment { get; set; }
     }
 }

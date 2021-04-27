@@ -1,11 +1,13 @@
 ﻿using Forum_App.Data;
 using Forum_App.Models;
+using Forum_App.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -36,8 +38,38 @@ namespace Forum_App.Controllers
         // GET: PostController/Details/5
         public IActionResult Details(int id)
         {
-            var obj = _db.Thread.Find(id);
-            return View(obj);
+            ThreadCommentsViewModel model = new ThreadCommentsViewModel()
+            {
+                Thread = _db.Thread.Find(id),
+                Comments = _db.Comment.Where(c => c.Thread_ID.Equals(id)),
+            };
+
+            return View(model);
+        }
+
+        // POST:
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details([Bind(Prefix = "Thread")] Thread oldThread, [Bind(Prefix = "Comment")] Comment newComment)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    newComment.Thread_ID = oldThread.Post_ID;
+                    newComment.User_ID = User.Identity.Name;
+                    newComment.CreateDate = DateTime.UtcNow;
+                    newComment.ModifyDate = newComment.CreateDate;
+                    _db.Post.Add(newComment);
+                    _db.SaveChanges();
+                    return View();
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         [Authorize]

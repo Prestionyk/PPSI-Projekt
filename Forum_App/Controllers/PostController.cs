@@ -32,7 +32,7 @@ namespace Forum_App.Controllers
 
             return View(objList);
         }
-
+        
         // GET: PostController/Details/5
         public IActionResult Details(int id)
         {
@@ -70,6 +70,8 @@ namespace Forum_App.Controllers
                 return View();
             }
         }
+
+        [Authorize]
         // GET: PostController/Edit/5
         public IActionResult Edit(int id)
         {
@@ -101,6 +103,7 @@ namespace Forum_App.Controllers
             }
         }
 
+        [Authorize]
         // GET: PostController/Delete/5
         public IActionResult Delete(int? id)
         {
@@ -115,7 +118,9 @@ namespace Forum_App.Controllers
             {
                 return NotFound();
             }
-            return View(obj);
+            if (User.Identity.IsAuthenticated && obj.User_ID == User.Identity.Name)
+                return View(obj);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: PostController/Delete/5

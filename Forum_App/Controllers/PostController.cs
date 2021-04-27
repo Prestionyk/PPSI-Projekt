@@ -76,7 +76,7 @@ namespace Forum_App.Controllers
         public IActionResult Edit(int id)
         {
             var obj = _db.Thread.Find(id);
-            if(User.Identity.IsAuthenticated && obj.User_ID == User.Identity.Name)
+            if(obj.User_ID == User.Identity.Name)
                 return View(obj);
             return RedirectToAction(nameof(Index));
         }
@@ -118,7 +118,7 @@ namespace Forum_App.Controllers
             {
                 return NotFound();
             }
-            if (User.Identity.IsAuthenticated && obj.User_ID == User.Identity.Name)
+            if (obj.User_ID == User.Identity.Name)
                 return View(obj);
             return RedirectToAction(nameof(Index));
         }

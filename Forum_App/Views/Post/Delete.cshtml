@@ -45,10 +45,6 @@
     
     <form method="post" asp-action="DeletePost">
         <input type="hidden" asp-for="Post_ID" />
-        <input type="hidden" asp-for="Contents" />
-        <input type="hidden" asp-for="CreateDate" />
-        <input type="hidden" asp-for="ModifyDate" />
-        <input type="hidden" asp-for="Title" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

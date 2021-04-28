@@ -2,14 +2,11 @@
 using Forum_App.Models;
 using Forum_App.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Forum_App.Controllers
 {
@@ -50,7 +47,7 @@ namespace Forum_App.Controllers
         // POST:
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Details(int id, [Bind(Prefix = "Comment")] Comment newComment)
+        public async Task<IActionResult> Details(int id, [Bind(Prefix = "Comment")] Comment newComment)
         {
             try
             {
@@ -60,8 +57,8 @@ namespace Forum_App.Controllers
                     newComment.User_ID = User.Identity.Name;
                     newComment.CreateDate = DateTime.UtcNow;
                     newComment.ModifyDate = newComment.CreateDate;
-                    _db.Post.Add(newComment);
-                    _db.SaveChanges();
+                    await _db.Post.AddAsync(newComment);
+                    await _db.SaveChangesAsync();
                     return RedirectToAction(nameof(Details), id);
                 }
                 return RedirectToAction(nameof(Details), id);
@@ -82,7 +79,7 @@ namespace Forum_App.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Thread newItem)
+        public async Task<IActionResult> Create(Thread newItem)
         {
             try
             {
@@ -91,8 +88,8 @@ namespace Forum_App.Controllers
                     newItem.User_ID = User.Identity.Name;
                     newItem.CreateDate = DateTime.UtcNow;
                     newItem.ModifyDate = newItem.CreateDate;
-                    _db.Post.Add(newItem);
-                    _db.SaveChanges();
+                    await _db.Post.AddAsync(newItem);
+                    await _db.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(Index));
@@ -116,7 +113,7 @@ namespace Forum_App.Controllers
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Thread obj)
+        public async Task<IActionResult> Edit(Thread obj)
         {
             try
             {
@@ -124,7 +121,7 @@ namespace Forum_App.Controllers
                 {
                     obj.ModifyDate = DateTime.UtcNow;
                     _db.Post.Update(obj);
-                    _db.SaveChanges();
+                    await _db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
                 return View(obj);
@@ -158,7 +155,7 @@ namespace Forum_App.Controllers
         // POST: PostController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(Thread obj)
+        public async Task<IActionResult> DeletePost(Thread obj)
         {
             try
             {
@@ -167,8 +164,13 @@ namespace Forum_App.Controllers
                 {
                     return NotFound("Null");
                 }
+                IEnumerable<Comment> objList = _db.Comment;
+                objList = objList.Where(s => s.Thread_ID.Equals(obj.Post_ID));
+
+                _db.Comment.RemoveRange(objList);
                 _db.Thread.Remove(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             catch

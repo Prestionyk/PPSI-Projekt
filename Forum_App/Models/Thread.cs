@@ -9,7 +9,6 @@ namespace Forum_App.Models
     public class Thread : Post
     {
         [Required]
-        [RegularExpression(@"^[A-Z](.*)")]
         public string Title { get; set; }
     }
 }

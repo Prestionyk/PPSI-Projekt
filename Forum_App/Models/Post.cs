@@ -11,7 +11,6 @@ namespace Forum_App.Models
         [Key]
         public int Post_ID { get; set; }
         [Required]
-        [RegularExpression(@"^[A-Z](.*)")]
         public string Contents { get; set; }
         public string User_ID { get; set; }
         public DateTime CreateDate { get; set; }

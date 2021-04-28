@@ -50,25 +50,25 @@ namespace Forum_App.Controllers
         // POST:
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Details([Bind(Prefix = "Thread")] Thread oldThread, [Bind(Prefix = "Comment")] Comment newComment)
+        public IActionResult Details(int id, [Bind(Prefix = "Comment")] Comment newComment)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    newComment.Thread_ID = oldThread.Post_ID;
+                    newComment.Thread_ID = id;
                     newComment.User_ID = User.Identity.Name;
                     newComment.CreateDate = DateTime.UtcNow;
                     newComment.ModifyDate = newComment.CreateDate;
                     _db.Post.Add(newComment);
                     _db.SaveChanges();
-                    return View();
+                    return RedirectToAction(nameof(Details), id);
                 }
-                return View();
+                return RedirectToAction(nameof(Details), id);
             }
             catch
             {
-                return View();
+                return Details(id);
             }
         }
 

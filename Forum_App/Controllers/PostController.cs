@@ -24,6 +24,8 @@ namespace Forum_App.Controllers
         {
             IEnumerable<Thread> objList = _db.Thread;
 
+            objList = objList.Where(x => x.User_ID != null);
+
             if (!String.IsNullOrEmpty(query))
             {
                 objList = objList.Where(s => s.Title.Contains(query));
@@ -159,23 +161,15 @@ namespace Forum_App.Controllers
         {
             try
             {
-
-                if (obj == null)
-                {
-                    return NotFound("Null");
-                }
-                IEnumerable<Comment> objList = _db.Comment;
-                objList = objList.Where(s => s.Thread_ID.Equals(obj.Post_ID));
-
-                _db.Comment.RemoveRange(objList);
-                _db.Thread.Remove(obj);
+                obj.User_ID = null;
+                _db.Thread.Update(obj);
                 await _db.SaveChangesAsync();
-
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
+            
             }
-            catch
+            catch(Exception e)
             {
-                return View();
+                return NotFound(e);
             }
         }
     }

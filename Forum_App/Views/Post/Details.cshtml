@@ -76,6 +76,36 @@
         </tr>
     }
 </table>
+
+@if (ViewBag.page != 1)
+{
+    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.page - 1)">@Html.Raw("<")</a>
+}
+
+@if (ViewBag.page - 2 > 1)
+{
+    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="1">1</a> 
+    if (ViewBag.page - 2 != 2) @Html.Raw("...");
+}
+
+@for (int i = ViewBag.page - 2; i <= ViewBag.pageCount && i <= ViewBag.page + 2; i++)
+{
+    if (i < 1)
+        i = 1;
+    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@i">@i</a>
+}
+
+@if (ViewBag.page + 2 < ViewBag.pageCount)
+{
+    if (ViewBag.pageCount - (ViewBag.page + 2) != 1) @Html.Raw("...");
+    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@ViewBag.pageCount">@ViewBag.pageCount</a>
+}
+
+@if (ViewBag.page != ViewBag.pageCount)
+{
+    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.page + 1)">></a>
+}
+
 <form method="post" asp-action="Details">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
@@ -85,7 +115,7 @@
 
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" asp-route-id="@Model.Thread.Post_ID" class="btn btn-primary" />
+        <input type="submit" value="Create" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@ViewBag.page" class="btn btn-primary" />
     </div>
 </form>
 

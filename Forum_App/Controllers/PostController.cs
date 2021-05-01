@@ -33,23 +33,32 @@ namespace Forum_App.Controllers
 
             return View(objList);
         }
-        
+
         // GET: PostController/Details/5
-        public IActionResult Details(int id)
+        [Route("Details/{id?}/{page?}")]
+        public IActionResult Details(int id, int page)
         {
+            if (page == 0)
+                page = 1;
+            var cm = _db.Comment.Where(c => c.Thread_ID.Equals(id)).OrderBy(c => c.CreateDate);
             ThreadCommentsViewModel model = new ThreadCommentsViewModel()
             {
                 Thread = _db.Thread.Find(id),
-                Comments = _db.Comment.Where(c => c.Thread_ID.Equals(id)),
+                Comments = cm.Skip((page - 1) * 10).Take(10),
+                
             };
-
+            if (cm.Count() > 0 && model.Comments.Count() == 0)
+                return NotFound();
+            ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
+            ViewBag.page = page;
             return View(model);
         }
 
         // POST:
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(int id, [Bind(Prefix = "Comment")] Comment newComment)
+        [Route("Details/{id?}/{page?}")]
+        public async Task<IActionResult> Details(int id, int page, [Bind(Prefix = "Comment")] Comment newComment)
         {
             try
             {
@@ -61,13 +70,13 @@ namespace Forum_App.Controllers
                     newComment.ModifyDate = newComment.CreateDate;
                     await _db.Post.AddAsync(newComment);
                     await _db.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), id);
+                    return RedirectToAction(nameof(Details), new { id, page });
                 }
-                return RedirectToAction(nameof(Details), id);
+                return RedirectToAction(nameof(Details), new { id, page });
             }
             catch
             {
-                return Details(id);
+                return Details(id, page);
             }
         }
 

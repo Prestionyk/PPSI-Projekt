@@ -55,7 +55,7 @@ namespace Forum_App.Controllers
                 return NotFound();
             ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
             ViewBag.page = page;
-            _logger.LogInformation($"Showing details of {id} thread");
+            _logger.LogInformation($"Showing details of thread {id}");
             return View(model);
         }
 
@@ -69,7 +69,7 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _logger.LogInformation("Thread edited");
+                    _logger.LogInformation($"New Comment on thread {id}");
                     newComment.Thread_ID = id;
                     newComment.User_ID = User.Identity.Name;
                     newComment.CreateDate = DateTime.UtcNow;
@@ -83,7 +83,7 @@ namespace Forum_App.Controllers
             catch(Exception e)
             {
                 _logger.LogError("Detailing thread went wrong " + e);
-                return Details(id);
+                return Details(id, page);
             }
         }
 

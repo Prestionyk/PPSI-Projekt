@@ -170,12 +170,12 @@ namespace Forum_App.Controllers
         {
             try
             {
-                obj.User_ID = null;
-                _db.Thread.Update(obj);
+                var orgThread = _db.Thread.FirstOrDefault(t => t.Post_ID == obj.Post_ID);
+                orgThread.User_ID = null;
                 await _db.SaveChangesAsync();
                 _logger.LogInformation("Thread deleted perfectly");
                 return RedirectToAction(nameof(Index));
-            
+
             }
             catch(Exception e)
             {

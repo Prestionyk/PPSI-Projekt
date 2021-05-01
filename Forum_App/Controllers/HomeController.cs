@@ -16,11 +16,13 @@ namespace Forum_App.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Home enterred");
             return View();
         }
 
         public IActionResult Privacy()
         {
+            _logger.LogInformation("Privacy enterred");
             return View();
         }
        

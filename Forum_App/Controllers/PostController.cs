@@ -3,6 +3,7 @@ using Forum_App.Models;
 using Forum_App.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace Forum_App.Controllers
     public class PostController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly ILogger<HomeController> _logger;
 
-        public PostController(ApplicationDbContext db)
+        public PostController(ApplicationDbContext db, ILogger<HomeController> logger)
         {
+            _logger = logger;
             _db = db;
         }
 
@@ -28,6 +31,7 @@ namespace Forum_App.Controllers
 
             if (!String.IsNullOrEmpty(query))
             {
+                _logger.LogInformation("Showing all threads");
                 objList = objList.Where(s => s.Title.Contains(query));
             }
 
@@ -51,6 +55,7 @@ namespace Forum_App.Controllers
                 return NotFound();
             ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
             ViewBag.page = page;
+            _logger.LogInformation($"Showing details of {id} thread");
             return View(model);
         }
 
@@ -64,6 +69,7 @@ namespace Forum_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    _logger.LogInformation("Thread edited");
                     newComment.Thread_ID = id;
                     newComment.User_ID = User.Identity.Name;
                     newComment.CreateDate = DateTime.UtcNow;
@@ -74,9 +80,10 @@ namespace Forum_App.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id, page });
             }
-            catch
+            catch(Exception e)
             {
-                return Details(id, page);
+                _logger.LogError("Detailing thread went wrong " + e);
+                return Details(id);
             }
         }
 
@@ -101,12 +108,14 @@ namespace Forum_App.Controllers
                     newItem.ModifyDate = newItem.CreateDate;
                     await _db.Post.AddAsync(newItem);
                     await _db.SaveChangesAsync();
+                    _logger.LogInformation("Thread created");
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception e)
             {
+                _logger.LogError("Creating thread went wrong " + e);
                 return View();
             }
         }
@@ -137,8 +146,9 @@ namespace Forum_App.Controllers
                 }
                 return View(obj);
             }
-            catch
+            catch (Exception e)
             {
+                _logger.LogError("Editing thread went wrong " + e);
                 return View();
             }
         }
@@ -173,12 +183,14 @@ namespace Forum_App.Controllers
                 var orgThread = _db.Thread.FirstOrDefault(t => t.Post_ID == obj.Post_ID);
                 orgThread.User_ID = null;
                 await _db.SaveChangesAsync();
+                _logger.LogInformation("Thread deleted perfectly");
                 return RedirectToAction(nameof(Index));
 
             }
             catch(Exception e)
             {
-                return NotFound(e);
+                _logger.LogError("Delete thread went wrong " + e);
+                return NotFound();
             }
         }
     }

@@ -45,7 +45,7 @@ namespace Forum_App.Controllers
             if (page == 0)
                 page = 1;
             var cm = _db.Comment.Where(c => c.Thread_ID.Equals(id)).OrderBy(c => c.CreateDate);
-            ThreadCommentsViewModel model = new ThreadCommentsViewModel()
+            ThreadCommentsViewModel model = new()
             {
                 Thread = _db.Thread.Find(id),
                 Comments = cm.Skip((page - 1) * 10).Take(10),

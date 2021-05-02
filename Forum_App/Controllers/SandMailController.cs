@@ -1,6 +1,7 @@
 ﻿using Forum_App.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Net.Mail;
 
 
@@ -36,17 +37,23 @@ namespace Forum_App.Controllers
                 smtp.Port = 587;
                 smtp.UseDefaultCredentials = false;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Credentials = new System.Net.NetworkCredential("smtptestforproject@gmail.com", "dtdxmnpiozwcgndv"); // Enter seders User name and password       
+                smtp.Credentials = new NetworkCredential("smtptestforproject@gmail.com", "dtdxmnpiozwcgndv"); // User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
                 smtp.Dispose();
 
-                return View("Index", _objModelMail);
+                return RedirectToAction(nameof(Confirmed));
             }
             else
             {
-                return NotFound();
+                return View("Index", _objModelMail);
             }
+            // GET
         }
+
+        public IActionResult Confirmed()
+            {
+                return View();
+            }
     }
 }

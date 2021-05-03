@@ -54,7 +54,7 @@ namespace Forum_App.Controllers
             if (cm.Count() > 0 && model.Comments.Count() == 0)
                 return NotFound();
             ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
-            ViewBag.page = page;
+            ViewBag.page = page;                   
             _logger.LogInformation($"Showing details of thread {id}");
             return View(model);
         }
@@ -183,7 +183,7 @@ namespace Forum_App.Controllers
                 var orgThread = _db.Thread.FirstOrDefault(t => t.Post_ID == obj.Post_ID);
                 orgThread.User_ID = null;
                 await _db.SaveChangesAsync();
-                _logger.LogInformation("Thread deleted perfectly");
+                _logger.LogInformation("Thread deleted successfully");
                 return RedirectToAction(nameof(Index));
 
             }

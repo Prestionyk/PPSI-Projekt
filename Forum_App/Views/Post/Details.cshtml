@@ -7,6 +7,7 @@
         userString = User.Identity.Name;
 }
 
+
 <h1>Details</h1>
 
 <div>
@@ -53,16 +54,15 @@
     }
     <a asp-action="Index">Back to List</a>
 </div>
-<table class="table">
+
+<div id="pagesDivTop"></div>
+
+<table class="table" id="CommentTable">
     @foreach (var item in Model.Comments)
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Contents)
-                @if (item.CreateDate != item.ModifyDate)
-                {
-                    @Html.Raw(" (edited)");
-                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User_ID)
@@ -77,34 +77,7 @@
     }
 </table>
 
-@if (ViewBag.page != 1)
-{
-    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.page - 1)">@Html.Raw("<")</a>
-}
-
-@if (ViewBag.page - 2 > 1)
-{
-    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="1">1</a> 
-    if (ViewBag.page - 2 != 2) @Html.Raw("...");
-}
-
-@for (int i = ViewBag.page - 2; i <= ViewBag.pageCount && i <= ViewBag.page + 2; i++)
-{
-    if (i < 1)
-        i = 1;
-    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@i">@i</a>
-}
-
-@if (ViewBag.page + 2 < ViewBag.pageCount)
-{
-    if (ViewBag.pageCount - (ViewBag.page + 2) != 1) @Html.Raw("...");
-    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@ViewBag.pageCount">@ViewBag.pageCount</a>
-}
-
-@if (ViewBag.page != ViewBag.pageCount)
-{
-    <a class="btn btn-outline-primary btn-sm" role="button" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.page + 1)">></a>
-}
+<div id="pagesDivBottom"></div>
 
 <form method="post" asp-action="Details">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -115,10 +88,92 @@
 
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@ViewBag.page" class="btn btn-primary" />
+        <input type="submit" value="Create" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" />
     </div>
 </form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script type="text/javascript">
+        //LoadPage(@Model.Thread.Post_ID, @ViewBag.page);
+        LoadPageButtons(@ViewBag.page);
+
+        function LoadPage(id, page) {
+            var Data = $("#CommentTable");
+            $.ajax({
+                type: "post",
+                url: "/post/getcomments?id=" + id + "&page=" + page,
+                contentType: "html",
+                success: function (result) {
+                    Data.html("<tbody>");                    
+                    $.each(result, function (index, value) {
+                        var d = "<tr>" +
+                            "<td>" + value.contents + "</td>" +
+                            "<td>" + value.user_ID + "</td>" +
+                            "<td>" + formatDate(value.createDate) + "</td>" +
+                            "<td>" + formatDate(value.modifyDate) + "</td>" +
+                            "</tr>";
+                        Data.append(d);
+                    })
+                    Data.append("</tbody>");
+                    LoadPageButtons(page);
+                    window.history.pushState(null, null, "/details/"+id+"/"+page);
+                }
+            });
+        }
+
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        function LoadPageButtons(page) {
+            var html = "";
+            if (@ViewBag.pageCount > 1)
+            {
+                if (page != 1)
+                {
+                    html += '<a class="text-primary btn btn-outline-primary btn-sm" role="button" onclick="LoadPage(@Model.Thread.Post_ID, ' + (page-1) + ')"><</a> '
+                }
+
+                if (page - 2 > 1)
+                {
+                    html += '<a class="text-primary btn btn-outline-primary btn-sm" role="button" onclick="LoadPage(@Model.Thread.Post_ID, 1)">1</a> ';
+                    if (page - 2 != 2) html += " ... ";
+                }
+                for (let i = page - 2; i <= @ViewBag.pageCount && i <= page + 2; i++)
+                {
+                    if (i < 1)
+                        i = 1;
+                    html += '<a class="text-primary btn btn-outline-primary btn-sm" role="button" onclick="LoadPage(@Model.Thread.Post_ID, ' + i + ')">' + i + '</a> ';
+                }
+
+                if (page + 2 < @ViewBag.pageCount)
+                {
+                    if (@ViewBag.pageCount - (page + 2) != 1) html += " ... ";
+                    html += '<a class="text-primary btn btn-outline-primary btn-sm" role="button" onclick="LoadPage(@Model.Thread.Post_ID, @ViewBag.pageCount)">@ViewBag.pageCount</a> ';
+                }
+
+                if (page != @ViewBag.pageCount)
+                {
+                    html += '<a class="text-primary btn btn-outline-primary btn-sm" role="button" onclick="LoadPage(@Model.Thread.Post_ID, ' + (page+1) + ')">></a> ';
+                }
+            }
+
+            document.getElementById("pagesDivTop").innerHTML = html;
+            document.getElementById("pagesDivBottom").innerHTML = html;
+        }
+
+</script>
 }

@@ -54,7 +54,8 @@ namespace Forum_App.Controllers
             if (cm.Count() > 0 && model.Comments.Count() == 0)
                 return NotFound();
             ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
-            ViewBag.page = page;                   
+            ViewBag.page = page;
+            ViewBag.max = (cm.Count() != 0 && cm.Count() % 10 == 0) ? true : false;
             _logger.LogInformation($"Showing details of thread {id}");
             return View(model);
         }
@@ -85,6 +86,18 @@ namespace Forum_App.Controllers
                 _logger.LogError("Detailing thread went wrong " + e);
                 return Details(id, page);
             }
+        }
+
+        [HttpPost]
+        public JsonResult GetComments(int id, int page)
+        {
+            if (page == 0)
+                page = 1;
+            List<Comment> cm = _db.Comment.Where(c => c.Thread_ID.Equals(id)).OrderBy(c => c.CreateDate).Skip((page - 1) * 10).Take(10).ToList();
+
+            _logger.LogInformation($"Showing details of thread {id}");
+
+            return Json(cm);
         }
 
         [Authorize]

@@ -29,7 +29,7 @@ namespace Forum_App.Controllers
                 mail.To.Add("smtptestforproject@gmail.com");
                 mail.From = new MailAddress(User.Identity.Name);
                 mail.Subject = _objModelMail.Subject;
-                mail.Body = _objModelMail.Body;
+                mail.Body = $"{User.Identity.Name}\n{_objModelMail.Body}";
                 mail.IsBodyHtml = true;
 
                 SmtpClient smtp = new();

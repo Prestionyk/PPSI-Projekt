@@ -57,21 +57,13 @@
 
 <div id="pagesDivTop"></div>
 
-<table class="table" id="CommentTable">
+<table class="table table-sm table-hover" id="CommentTable">
     @foreach (var item in Model.Comments)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Contents)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyDate)
+                <p class="text-right text-muted mb-0 small">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</p>
+                <p>@Html.DisplayFor(modelItem => item.Contents)</p>
             </td>
         </tr>
     }
@@ -96,7 +88,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
         //LoadPage(@Model.Thread.Post_ID, @ViewBag.page);
         LoadPageButtons(@ViewBag.page);
 
@@ -107,14 +99,18 @@
                 url: "/post/getcomments?id=" + id + "&page=" + page,
                 contentType: "html",
                 success: function (result) {
-                    Data.html("<tbody>");                    
+                    Data.html("<tbody>");
                     $.each(result, function (index, value) {
-                        var d = "<tr>" +
+                        /*var d = "<tr>" +
                             "<td>" + value.contents + "</td>" +
                             "<td>" + value.user_ID + "</td>" +
                             "<td>" + formatDate(value.createDate) + "</td>" +
                             "<td>" + formatDate(value.modifyDate) + "</td>" +
-                            "</tr>";
+                            "</tr>";*/
+                        var d = '<tr>' +
+                            '<td><p class="text-right text-muted mb-0 small">' + value.user_ID + ' - ' + formatDate(value.createDate) + '</p>' +
+                            '<p>' + value.contents + '</p></td></tr>';
+
                         Data.append(d);
                     })
                     Data.append("</tbody>");

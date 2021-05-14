@@ -1,4 +1,4 @@
-﻿@model Forum_App.Models.CityWeatherModel
+﻿@model Tuple<string, double>
 
 @{
     ViewData["Title"] = "Show Weather";
@@ -8,9 +8,9 @@
 
 <div class="table">
     <div class="alert alert-success" role="alert">
-        Temperature in your Town @Html.DisplayFor(model => model.Name):
+        Temperature in your Town @Html.DisplayFor(model => model.Item1):
     </div>
     <div class="alert alert-success" role="alert">
-        Is equal to @Html.DisplayFor(model => model.CelciusTemperature) celcius.
+        Is equal to @Html.DisplayFor(model => model.Item2) celcius.
     </div>
 </div>

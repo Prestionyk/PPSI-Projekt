@@ -39,7 +39,7 @@ namespace Forum_App.Controllers
         }
 
         // GET: PostController/Details/5
-        [Route("Details/{id?}/{page?}")]
+        [Route("thread/{id?}/{page?}")]
         public IActionResult Details(int id, int page)
         {
             if (page == 0)
@@ -63,7 +63,7 @@ namespace Forum_App.Controllers
         // POST:
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Details/{id?}/{page?}")]
+        [Route("thread/{id?}/{page?}")]
         public async Task<IActionResult> Details(int id, int page, [Bind(Prefix = "Comment")] Comment newComment)
         {
             try

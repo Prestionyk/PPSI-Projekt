@@ -10,7 +10,7 @@
 <h1>Posts</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="text-primary float-right btn btn-outline-primary btn-sm" role="button" asp-action="Create">Create New Post</a>
 </p>
 <form asp-controller="Post" asp-action="Index" method="get">
     <p>
@@ -18,71 +18,50 @@
         <input type="submit" value="Filter" />
     </p>
 </form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contents)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifyDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+<table class="table table-hover table-sm" style="table-layout: fixed">
     @if(Model.Count() > 0)
             {
             <tbody>
                 @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Contents)
-                            @if (item.CreateDate != item.ModifyDate)
-                            {
-                                @Html.Raw(" (edited)");
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.User_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreateDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ModifyDate)
-                        </td>
-                        <td>
-                            @if (userString == item.User_ID)
-                            {
-                                <a asp-action="Edit" asp-route-id="@item.Post_ID">Edit</a>
-                                @Html.Raw("|")
-                            }
-                            <a asp-action="Details" asp-route-id="@item.Post_ID">Details</a>
-                            @if (userString == item.User_ID)
-                            {
-                                @Html.Raw("|")
-                                <a asp-action="Delete" asp-route-id="@item.Post_ID">Delete</a>
-                            }
-                        </td>
-                    </tr>
+                {                 
+                <tr class="d-flex">
+                    <td class="w-100">
+                        <a class="nav-link text-dark w-100 float-left" asp-action="Details" asp-route-id="@item.Post_ID">
+                            <p class="small mb-0">
+                                <span class="float-right text-muted font-italic">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</span>
+                                <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</span>
+                            </p>
+                            <p class="text-truncate  pl-3">
+                                @Html.DisplayFor(modelItem => item.Contents)
+                                @if (item.CreateDate != item.ModifyDate)
+                                {
+                                    @Html.Raw("<span class=\"text-muted small\" data-toggle=\"tooltip\" data-placement=\"right\"  title=\"Edited on: ");
+                                    @Html.DisplayFor(modelItem => item.ModifyDate);
+                                    @Html.Raw("\"> (edited)</span>");
+                                            }
+                            </p>
+                        </a>
+                        
+                    </td>
+                </tr>
                 }
             </tbody>
             }
             else
             {
-            <h3>No Post in database...</h3>
+                <tr>
+                    <td>
+                        <h3>No Post in database...</h3>
+                    <td>
+                </tr>
             }
 </table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

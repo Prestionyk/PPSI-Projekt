@@ -8,8 +8,12 @@
 
 <h4>Thread</h4>
 <hr />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<br />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Post_ID" />
@@ -21,20 +25,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="Contents" class="control-label"></label>
-                <input asp-for="Contents" class="form-control" />
+                <textarea  asp-for="Contents" rows="6" style="resize: none" class="form-control"></textarea>
                 <span asp-validation-for="Contents" class="text-danger"></span>
             </div>
             <input asp-for="CreateDate" class="form-control" hidden />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
             </div>
+        </form>
+        <form method="post" class="float-right" asp-action="DeletePost">
+            <input type="hidden" asp-for="Post_ID" />
+            <input type="submit" value="Delete Post" class="btn btn-danger" />
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

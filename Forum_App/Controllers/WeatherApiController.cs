@@ -23,21 +23,22 @@ namespace Forum_App.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string city)
         {
-            CityWeatherModel weather = new();
-            weather.Name = city.ToUpper();
+            string name = city.Substring(0, 1).ToUpper() + city.Substring(1, city.Length-1).ToLower();
 
-            string link = $"https://api.openweathermap.org/data/2.5/weather?q={weather.Name}&APPID=53cbfca47c3fd27cc01e1ccc6f1ab1bb";
+            string link = $"https://api.openweathermap.org/data/2.5/weather?q={name}&APPID=53cbfca47c3fd27cc01e1ccc6f1ab1bb";
             var response = await _client.GetAsync(link);
             var result = await response.Content.ReadAsStringAsync();
 
             JObject obj = JObject.Parse(result);
             double kelwin = double.Parse(obj["main"]["temp"]?.ToString());
-            weather.CelciusTemperature = Math.Round(kelwin - 273.15, 2);
+            double temp = Math.Round(kelwin - 273.15, 2);
+
+            Tuple<string, double> weather = new(name, temp);
 
             return View(nameof(ShowWeather), weather); 
         }
 
-        public IActionResult ShowWeather(CityWeatherModel weather)
+        public IActionResult ShowWeather(Tuple<string, double> weather)
         {
             return View(weather);
         }

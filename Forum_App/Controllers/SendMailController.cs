@@ -7,7 +7,7 @@ using System.Net.Mail;
 
 namespace Forum_App.Controllers
 {
-    public class SandMailController : Controller
+    public class SendMailController : Controller
     {
         //  
         // GET: /SendMailer/   

@@ -47,42 +47,58 @@
     </dl>
 </div>
 <div>
-    @if (userString == Model.Thread.User_ID)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Thread.Post_ID">Edit</a>
-        @Html.Raw("|")
-    }
     <a asp-action="Index">Back to List</a>
+    @if (userString == Model.Thread.User_ID)
+    {    
+        @Html.Raw("|");
+        <a asp-action="Edit" asp-route-id="@Model.Thread.Post_ID">Edit</a>
+    }
 </div>
 
-<div id="pagesDivTop"></div>
+<hr />
 
-<table class="table table-sm table-hover" id="CommentTable">
-    @foreach (var item in Model.Comments)
+<div id="pagesDivTop"></div>
+<br />
+
+<table class="table table-sm table-hover" style="table-layout: fixed" id="CommentTable">
+    @if (Model.Comments.Count() != 0)
     {
-        <tr>
-            <td>
-                <p class="text-right text-muted mb-0 small">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</p>
-                <p>@Html.DisplayFor(modelItem => item.Contents)</p>
-            </td>
-        </tr>
+        @foreach (var item in Model.Comments)
+        {
+            <tr>
+                <td>
+                    <p class="text-right text-muted mb-0 small">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</p>
+                    <p class="text-wrap text-break">@Html.DisplayFor(modelItem => item.Contents)</p>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        @Html.Raw("No comments in the thread yet");
     }
 </table>
 
+<hr />
+
 <div id="pagesDivBottom"></div>
 
-<form method="post" asp-action="Details">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Comment.Contents" class="control-label"></label>
-        <input asp-for="Comment.Contents" class="form-control" />
-        <span asp-validation-for="Comment.Contents" class="text-danger"></span>
+<br />
 
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" />
-    </div>
-</form>
+<div class="w-75">
+    <form method="post" asp-action="Details">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="control-label">Add Comment</label>
+            <textarea asp-for="Comment.Contents" rows="2" style="resize: none" class="form-control"></textarea>
+            <span asp-validation-for="Comment.Contents" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -109,7 +125,7 @@
                             "</tr>";*/
                         var d = '<tr>' +
                             '<td><p class="text-right text-muted mb-0 small">' + value.user_ID + ' - ' + formatDate(value.createDate) + '</p>' +
-                            '<p>' + value.contents + '</p></td></tr>';
+                            '<p class="text-wrap text-break">' + value.contents + '</p></td></tr>';
 
                         Data.append(d);
                     })

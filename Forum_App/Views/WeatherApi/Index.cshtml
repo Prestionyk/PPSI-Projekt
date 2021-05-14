@@ -1,6 +1,4 @@
-﻿@model Forum_App.Models.CityWeatherModel
-
-@{
+﻿@{
     ViewData["Title"] = "Check weather API";
 }
 
@@ -15,7 +13,6 @@
                     <span class="input-group-text" id="inputGroup-sizing-default">Name of city:</span>
                 </div>
                 <input name="city" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                <span asp-validation-for="Name" class="text-danger"></span>
                 <input type="submit" class="btn btn-primary" value="Check weather">
             </div>
         </form>

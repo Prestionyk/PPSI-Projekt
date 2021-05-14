@@ -66,8 +66,14 @@
         @foreach (var item in Model.Comments)
         {
             <tr>
-                <td>
-                    <p class="text-right text-muted mb-0 small">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</p>
+                <td class="p-2">
+                    <span class="float-right font-italic pd-1">
+                        <span class="badge @(userString == item.User_ID ? "badge-secondary text-white" : "text-muted font-weight-normal")">
+                            @Html.DisplayFor(modelItem => item.User_ID)
+                        </span>
+                        <span class="small text-muted">@Html.Raw(" - ") @Html.DisplayFor(modelItem => item.CreateDate)</span>
+                    </span>
+                    
                     <p class="text-wrap text-break">@Html.DisplayFor(modelItem => item.Contents)</p>
                 </td>
             </tr>
@@ -108,6 +114,8 @@
         //LoadPage(@Model.Thread.Post_ID, @ViewBag.page);
         LoadPageButtons(@ViewBag.page);
 
+        var userString = "@userString";
+
         function LoadPage(id, page) {
             var Data = $("#CommentTable");
             $.ajax({
@@ -123,15 +131,26 @@
                             "<td>" + formatDate(value.createDate) + "</td>" +
                             "<td>" + formatDate(value.modifyDate) + "</td>" +
                             "</tr>";*/
-                        var d = '<tr>' +
+                        /*var d = '<tr>' +
                             '<td><p class="text-right text-muted mb-0 small">' + value.user_ID + ' - ' + formatDate(value.createDate) + '</p>' +
-                            '<p class="text-wrap text-break">' + value.contents + '</p></td></tr>';
-
+                            '<p class="text-wrap text-break">' + value.contents + '</p></td></tr>';*/
+                        var d = '<tr>' +
+                            '<td class="p-2">' +
+                                '<span class="float-right font-italic pd-1">' +
+                                    '<span class="badge ' + (userString == value.user_ID ? "badge-secondary text-white" : "text-muted font-weight-normal") + '">' +
+                                        value.user_ID +
+                                    '</span> ' +
+                                    '<span class="small text-muted"> - ' +
+                                        formatDate(value.createDate) +
+                                    '</span>'+
+                                '</span>' +
+                                '<p class="text-wrap text-break">'+value.contents+'</p>'+
+                            '</td></tr>';
                         Data.append(d);
                     })
                     Data.append("</tbody>");
                     LoadPageButtons(page);
-                    window.history.pushState(null, null, "/details/"+id+"/"+page);
+                    window.history.pushState(null, null, "/thread/"+id+"/"+page);
                 }
             });
         }

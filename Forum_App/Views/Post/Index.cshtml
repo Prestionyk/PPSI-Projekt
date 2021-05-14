@@ -27,11 +27,18 @@
                 <tr class="d-flex">
                     <td class="w-100">
                         <a class="nav-link text-dark w-100 float-left" asp-action="Details" asp-route-id="@item.Post_ID">
-                            <p class="small mb-0">
-                                <span class="float-right text-muted font-italic">@Html.DisplayFor(modelItem => item.User_ID) - @Html.DisplayFor(modelItem => item.CreateDate)</span>
+                            <p class="mb-0">
+                                <span class="float-right font-italic">
+                                    <span class="badge @(userString == item.User_ID ? "badge-secondary text-white" : "text-muted font-weight-normal")">
+                                        @Html.DisplayFor(modelItem => item.User_ID)
+                                    </span>
+                                    <span class="small text-muted">
+                                        - @Html.DisplayFor(modelItem => item.CreateDate)
+                                    </span>
+                                </span>
                                 <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</span>
                             </p>
-                            <p class="text-truncate  pl-3">
+                            <p class="text-truncate small pl-3">
                                 @Html.DisplayFor(modelItem => item.Contents)
                                 @if (item.CreateDate != item.ModifyDate)
                                 {

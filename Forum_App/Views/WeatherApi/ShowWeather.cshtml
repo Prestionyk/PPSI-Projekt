@@ -1,0 +1,16 @@
+﻿@model Forum_App.Models.CityWeatherModel
+
+@{
+    ViewData["Title"] = "Show Weather";
+}
+
+<h1>Result</h1>
+
+<div class="table">
+    <div class="alert alert-success" role="alert">
+        Temperature in your Town @Html.DisplayFor(model => model.Name):
+    </div>
+    <div class="alert alert-success" role="alert">
+        Is equal to @Html.DisplayFor(model => model.CelciusTemperature) celcius.
+    </div>
+</div>

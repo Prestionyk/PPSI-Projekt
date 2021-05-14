@@ -1,0 +1,27 @@
+﻿@model Forum_App.Models.CityWeatherModel
+
+@{
+    ViewData["Title"] = "Check weather API";
+}
+
+<h1>Check weather</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="WeatherApi" asp-action="Index" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Name of city:</span>
+                </div>
+                <input name="city" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <input type="submit" class="btn btn-primary" value="Check weather">
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

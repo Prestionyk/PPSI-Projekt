@@ -7,7 +7,8 @@
         userString = User.Identity.Name;
 }
 
-
+<title>Details about post</title>
+<meta name="description" content="All details of choosen post and all his comments. You can also create new comment." />
 <h1>Details</h1>
 
 <div>
@@ -49,7 +50,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
     @if (userString == Model.Thread.User_ID)
-    {    
+    {
         @Html.Raw("|");
         <a asp-action="Edit" asp-route-id="@Model.Thread.Post_ID">Edit</a>
     }
@@ -73,7 +74,7 @@
                         </span>
                         <span class="small text-muted">@Html.Raw(" - ") @Html.DisplayFor(modelItem => item.CreateDate)</span>
                     </span>
-                    
+
                     <p class="text-wrap text-break">@Html.DisplayFor(modelItem => item.Contents)</p>
                 </td>
             </tr>
@@ -96,12 +97,26 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label class="control-label">Add Comment</label>
-            <textarea asp-for="Comment.Contents" rows="2" style="resize: none" class="form-control"></textarea>
+            @if (userString == null)
+            {
+                <textarea asp-for="Comment.Contents" rows="2" style="resize: none" class="form-control" disabled>LogIn to comment</textarea>
+            }
+            else
+            {
+                <textarea asp-for="Comment.Contents" rows="2" style="resize: none" class="form-control"></textarea>
+            }
             <span asp-validation-for="Comment.Contents" class="text-danger"></span>
 
         </div>
         <div class="form-group">
-            <input type="submit" value="Submit" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" />
+            @if (userString == null)
+            {
+                <input type="submit" value="LogIn to comment" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" disabled />
+            }
+            else
+            {
+                <input type="submit" value="Submit" asp-route-id="@Model.Thread.Post_ID" asp-route-page="@(ViewBag.pageCount + (@ViewBag.max ? 1 : 0))" class="btn btn-primary" />
+            }
         </div>
     </form>
 </div>
@@ -110,7 +125,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
         //LoadPage(@Model.Thread.Post_ID, @ViewBag.page);
         LoadPageButtons(@ViewBag.page);
 
@@ -206,5 +221,5 @@
             document.getElementById("pagesDivBottom").innerHTML = html;
         }
 
-</script>
+    </script>
 }

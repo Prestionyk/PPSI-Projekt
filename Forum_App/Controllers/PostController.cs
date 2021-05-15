@@ -14,9 +14,9 @@ namespace Forum_App.Controllers
     public class PostController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<PostController> _logger;
 
-        public PostController(ApplicationDbContext db, ILogger<HomeController> logger)
+        public PostController(ApplicationDbContext db, ILogger<PostController> logger)
         {
             _logger = logger;
             _db = db;

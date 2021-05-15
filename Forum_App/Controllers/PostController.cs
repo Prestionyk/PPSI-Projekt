@@ -72,9 +72,9 @@ namespace Forum_App.Controllers
                 {
                     _logger.LogInformation($"New Comment on thread {id}");
                     newComment.Thread_ID = id;
-                    newComment.User_ID = User.Identity.Name;
+                    newComment.User_ID = User.Identity.Name;                    
                     newComment.CreateDate = DateTime.UtcNow;
-                    newComment.ModifyDate = newComment.CreateDate;
+                    newComment.ModifyDate = newComment.CreateDate;                    
                     await _db.Post.AddAsync(newComment);
                     await _db.SaveChangesAsync();
                     return RedirectToAction(nameof(Details), new { id, page });

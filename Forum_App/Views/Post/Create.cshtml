@@ -9,7 +9,7 @@
 <h4>Thread</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form method="post" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Contents" class="control-label"></label>
-                <input asp-for="Contents" class="form-control" />
+                <textarea asp-for="Contents" rows="4" style="resize: none" class="form-control"></textarea>
                 <span asp-validation-for="Contents" class="text-danger"></span>
             </div>
             <div class="form-group">

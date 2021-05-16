@@ -3,6 +3,7 @@ using Forum_App.Models;
 using Forum_App.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
@@ -156,11 +157,17 @@ namespace Forum_App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Thread obj)
         {
+            Thread t = _db.Thread.AsNoTracking().Where(t => t.Post_ID == obj.Post_ID).FirstOrDefault();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    obj.ModifyDate = DateTime.UtcNow;
+                    if (obj.Contents != t.Contents || obj.Title != t.Title)
+                    {
+                        obj.ModifyDate = DateTime.UtcNow;
+                    }
+                    else
+                        obj.ModifyDate = obj.CreateDate;
                     _db.Post.Update(obj);
                     await _db.SaveChangesAsync();
                     return RedirectToAction("Index");

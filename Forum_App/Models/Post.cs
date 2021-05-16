@@ -13,9 +13,9 @@ namespace Forum_App.Models
         [Required]
         public string Contents { get; set; }
         public string User_ID { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm UTC}")]
         public DateTime CreateDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm UTC}")]
         public DateTime ModifyDate { get; set; }
     }
 }

@@ -15,16 +15,13 @@
     <br />
     <div class="d-block w-100 float-left">
         <p class="mb-0 font-weight-bold h3">@Html.DisplayFor(modelItem => Model.Thread.Title)</p>
-        <p class="pl-3 w-auto mt-3 text-break">
-            @Html.DisplayFor(modelItem => Model.Thread.Contents)
-        </p>
+        <p class="pl-3 w-auto mt-3 text-break" style="white-space: pre-wrap">@Html.DisplayFor(modelItem => Model.Thread.Contents)</p>
         @if (Model.Thread.CreateDate != Model.Thread.ModifyDate)
         {
             @Html.Raw("<span class=\"float-left text-muted small\" data-toggle=\"tooltip\" data-placement=\"right\"  title=\"Edited on: ");
             @Html.DisplayFor(modelItem => Model.Thread.ModifyDate);
             @Html.Raw("\"> (edited)</span>");
         }
-        <br />
         <span class="float-right font-italic">
             <span class="badge @(userString == Model.Thread.User_ID ? "badge-secondary text-white" : "text-muted font-weight-normal")">
                 @Html.DisplayFor(modelItem => Model.Thread.User_ID)
@@ -44,8 +41,6 @@
     }
 </div>
 
-<hr />
-
 <div id="pagesDivTop"></div>
 <br />
 
@@ -63,7 +58,7 @@
                         <span class="small text-muted">@Html.Raw(" - ") @Html.DisplayFor(modelItem => item.CreateDate)</span>
                     </span>
 
-                    <p class="text-wrap text-break">@Html.DisplayFor(modelItem => item.Contents)</p>
+                    <p class="text-break" style="white-space: pre-wrap">@Html.DisplayFor(modelItem => item.Contents)</p>
                 </td>
             </tr>
         }
@@ -144,7 +139,7 @@
                                         formatDate(value.createDate) +
                                     '</span>'+
                                 '</span>' +
-                                '<p class="text-wrap text-break">'+value.contents+'</p>'+
+                                '<p class="text-break" style="white-space: pre-wrap">'+value.contents+'</p>'+
                             '</td></tr>';
                         Data.append(d);
                     })
@@ -172,7 +167,7 @@
             if (minute.length < 2)
                 minute = '0' + minute;
 
-            return [year, month, day].join('-') + ' ' + hour + ':' + minute;
+            return [year, month, day].join('-') + ' ' + hour + ':' + minute + " UTC";
         }
 
         function LoadPageButtons(page) {
@@ -208,7 +203,7 @@
                 }
             }
 
-            document.getElementById("pagesDivTop").innerHTML = html;
+            document.getElementById("pagesDivTop").innerHTML = "<hr />" + html;
             document.getElementById("pagesDivBottom").innerHTML = html;
         }
 

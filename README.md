@@ -10,7 +10,7 @@ Grupa: ?
 
 Wykorzystane funkcjonalności w aplikacji internetowej:
 
-1. HTML5 - jest jako niezbędny element o wyświetlania treści na stronie.
+1. HTML5 - jest jako niezbędny element do wyświetlania treści na stronie.
 2. CSS3 - formatowanie treści za pomocą boostrap 4.
 3. Formularze - wykorzystane do tworzenia użytkownika, komentarzy oraz samych postów.
 4. Baza danych - połączenie z lokalną bazą danych, w któej przechowywani są użytkownicy, komentarze oraz posty.

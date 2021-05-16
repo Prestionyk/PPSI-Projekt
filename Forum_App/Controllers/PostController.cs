@@ -173,7 +173,7 @@ namespace Forum_App.Controllers
                         obj.ModifyDate = DateTime.UtcNow;
                     }
                     else
-                        obj.ModifyDate = obj.CreateDate;
+                        obj.ModifyDate = t.ModifyDate;
                     _db.Post.Update(obj);
                     await _db.SaveChangesAsync();
                     return RedirectToAction("Index");

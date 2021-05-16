@@ -3,6 +3,7 @@ using Forum_App.Models;
 using Forum_App.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,21 +16,28 @@ namespace Forum_App.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly ILogger<PostController> _logger;
+        private IMemoryCache memoryCache;
 
-        public PostController(ApplicationDbContext db, ILogger<PostController> logger)
+        public PostController(ApplicationDbContext db, ILogger<PostController> logger, IMemoryCache memoryCache)
         {
             _logger = logger;
             _db = db;
+            this.memoryCache = memoryCache;
         }
 
         // GET: PostController
         public IActionResult Index(string query)
         {
-            IEnumerable<Thread> objList = _db.Thread;
+            IEnumerable<Thread> objList;
 
-            objList = objList.Where(x => x.User_ID != null);
+            if (!memoryCache.TryGetValue("ThreadCache", out objList))
+            {
+                objList = _db.Thread.Where(x => x.User_ID != null);
+                var cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(5));
+                memoryCache.Set("ThreadCache", objList.ToList(), cacheOptions);
+            }
 
-            if (!String.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
             {
                 _logger.LogInformation("Showing all threads");
                 objList = objList.Where(s => s.Title.Contains(query));
@@ -51,7 +59,7 @@ namespace Forum_App.Controllers
                 Comments = cm.Skip((page - 1) * 10).Take(10),
                 
             };
-            if (cm.Count() > 0 && model.Comments.Count() == 0)
+            if (cm.Any() && !model.Comments.Any())
                 return NotFound();
             ViewBag.pageCount = (cm.Count() - 1) / 10 + 1;
             ViewBag.page = page;

@@ -25,7 +25,7 @@ namespace Forum_App.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Post>> GetAllThreads()
         {
-            _logger.LogInformation("Get API all threads correct");
+            _logger.LogInformation("API - Show all threads");
             return _db.Thread;
         }
 
@@ -33,7 +33,7 @@ namespace Forum_App.Controllers
         [HttpGet]
         public ActionResult<Post> GetThread(int ThreadID)
         {
-            _logger.LogInformation("Get API specified thread correct");
+            _logger.LogInformation("API - Show specific thread");
             return _db.Thread.FirstOrDefault(t => t.Post_ID.Equals(ThreadID));
         }
 
@@ -41,7 +41,7 @@ namespace Forum_App.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Post>> GetCommentsOfThread(int ThreadID)
         {
-            _logger.LogInformation("Get API specified threads' comments correct");
+            _logger.LogInformation("API - Show all comments of a thread");
             return _db.Comment.Where(t => t.Thread_ID.Equals(ThreadID)).ToList();
         }
 
@@ -49,7 +49,7 @@ namespace Forum_App.Controllers
         [HttpGet]
         public ActionResult<Post> GetComment(int CommentID)
         {
-            _logger.LogInformation("Get API specified comment correct");
+            _logger.LogInformation("API - Show specific comment");
             return _db.Comment.FirstOrDefault(t => t.Post_ID.Equals(CommentID));
         }
 

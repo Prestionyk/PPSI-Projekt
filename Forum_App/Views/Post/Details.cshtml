@@ -1,14 +1,13 @@
 ﻿@model Forum_App.ViewModels.ThreadCommentsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    int titleLen = 15;
+    ViewData["Title"] = Model.Thread.Title.Substring(0, Math.Min(Model.Thread.Title.Length, titleLen)) + (Model.Thread.Title.Length > titleLen ? "..." : "");
     string userString = null;
     if (User.Identity.IsAuthenticated)
         userString = User.Identity.Name;
 }
 
-<title>Details about post</title>
-<meta name="description" content="All details of choosen post and all his comments. You can also create new comment." />
 <h1>Details</h1>
 
 <div>

@@ -1,17 +1,16 @@
 ﻿@model IEnumerable<Forum_App.Models.Thread>
 
 @{
-    ViewData["Title"] = "Posts";
+    ViewData["Title"] = "Threads";
     string userString = null;
     if (User.Identity.IsAuthenticated)
         userString = User.Identity.Name;
 }
-<title>Table of posts</title>
-<meta name="description" content="Here u can find all posts that are stored in our database. When u choose post u will get comments too." />
-<h1>Posts</h1>
+
+<h1>Threads</h1>
 
 <p>
-    <a class="text-primary float-right btn btn-outline-primary btn-sm" role="button" asp-action="Create">Create New Post</a>
+    <a class="text-primary float-right btn btn-outline-primary btn-sm" role="button" asp-action="Create">Create a New Post</a>
 </p>
 <form asp-controller="Post" asp-action="Index" method="get">
     <p>

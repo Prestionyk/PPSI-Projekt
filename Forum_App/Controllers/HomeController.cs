@@ -18,14 +18,7 @@ namespace Forum_App.Controllers
         {
             _logger.LogInformation("Home enterred");
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            _logger.LogInformation("Privacy enterred");
-            return View();
-        }
-       
+        } 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

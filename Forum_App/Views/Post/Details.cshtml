@@ -6,6 +6,7 @@
     string userString = null;
     if (User.Identity.IsAuthenticated)
         userString = User.Identity.Name;
+    ViewData["Description"] = "Thread made by " + userString + " on " + Model.Thread.CreateDate;
 }
 
 <h1>Details</h1>

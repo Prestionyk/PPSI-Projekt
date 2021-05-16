@@ -34,4 +34,5 @@ Wykorzystane funkcjonalności w aplikacji internetowej:
 
 **Podsumowanie projektu**
 
-Projekt został wykonany we frameworku ASP.NET Core MVC. Początki były trudne, ponieważ nigdy wcześniej nie mielismy kontaktu z takim zadaniem, ale z biegem czasu praca stawała sie coraz przyjemniejsza. Framework ma bardzo dużo wbudowanych funkcjonalności, które przyśpieszają pracę. Wcześniej nie mieliśmy różnież kontaktu z bibliotekami CSS takimi jak boostrap. Boostrap okazał sie bardzo przydatny i przyjemny w użyciu. Poniżej przykładowe ss z aplikacji:
+Projekt został wykonany we frameworku ASP.NET Core MVC. Początki były trudne, ponieważ nigdy wcześniej nie mielismy kontaktu z takim zadaniem, ale z biegem czasu praca stawała sie coraz przyjemniejsza. Framework ma bardzo dużo wbudowanych funkcjonalności, które przyśpieszają pracę. Wcześniej nie mieliśmy różnież kontaktu z bibliotekami CSS takimi jak boostrap. Boostrap okazał sie bardzo przydatny i przyjemny w użyciu. Poniżej przykładowy ss z aplikacji:
+![Bez tytułu](https://user-images.githubusercontent.com/72551592/118408758-315dc080-b687-11eb-8908-b301c41e9a8f.png)

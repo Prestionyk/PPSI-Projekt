@@ -39,6 +39,7 @@
                                 <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</span>
                             </p>
                             <p class="text-truncate small pl-3 w-auto mb-0">@Html.DisplayFor(modelItem => item.Contents)</p>
+                            <span class="float-left text-muted small">@ViewData[item.Post_ID.ToString()] <span class="font-weight-light">comments</span></span>
                             @if (item.CreateDate != item.ModifyDate)
                             {
                                 @Html.Raw("<span class=\"float-right text-muted small\" data-toggle=\"tooltip\" data-placement=\"left\"  title=\"Edited on: ");

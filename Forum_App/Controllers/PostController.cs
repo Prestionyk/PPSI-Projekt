@@ -44,6 +44,12 @@ namespace Forum_App.Controllers
                 objList = objList.Where(s => s.Title.Contains(query));
             }
 
+            foreach (Thread t in objList)
+            {
+                ViewData[t.Post_ID.ToString()] = _db.Comment.Where(c => c.Thread_ID == t.Post_ID).Count();
+            }
+
+
             return View(objList);
         }
 

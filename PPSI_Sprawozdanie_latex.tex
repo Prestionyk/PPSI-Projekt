@@ -1,0 +1,207 @@
+%%%%%%%%%%%%  Generated using docx2latex.com  %%%%%%%%%%%%%%
+
+%%%%%%%%%%%%  v2.0.0-beta  %%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{extarrows}
+\usepackage{graphicx}
+\usepackage[backend=biber,
+style=numeric,
+sorting=none,
+isbn=false,
+doi=false,
+url=false,
+]{biblatex}\addbibresource{bibliography-biblatex.bib}
+
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{wasysym}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{ragged2e}
+\usepackage[svgnames,table]{xcolor}
+\usepackage{tikz}
+\usepackage{longtable}
+\usepackage{changepage}
+\usepackage{setspace}
+\usepackage{hhline}
+\usepackage{multicol}
+\usepackage{tabto}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{fancyhdr}
+\usepackage[toc,page]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{shapes.symbols,shapes.geometric,shadows,arrows.meta}
+\tikzset{>={Latex[width=1.5mm,length=2mm]}}
+\usepackage{flowchart}\usepackage[paperheight=11.69in,paperwidth=8.27in,left=1.0in,right=1.0in,top=1.5in,bottom=1.5in,headheight=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\TabPositions{0.5in,1.0in,1.5in,2.0in,2.5in,3.0in,3.5in,4.0in,4.5in,5.0in,5.5in,6.0in,}
+
+\urlstyle{same}
+
+\renewcommand{\_}{\kern-1.5pt\textunderscore\kern-1.5pt}
+
+ %%%%%%%%%%%%  Set Depths for Sections  %%%%%%%%%%%%%%
+
+% 1) Section
+% 1.1) SubSection
+% 1.1.1) SubSubSection
+% 1.1.1.1) Paragraph
+% 1.1.1.1.1) Subparagraph
+
+
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+
+ %%%%%%%%%%%%  Set Depths for Nested Lists created by \begin{enumerate}  %%%%%%%%%%%%%%
+
+
+\setlistdepth{9}
+\renewlist{enumerate}{enumerate}{9}
+		\setlist[enumerate,1]{label=\arabic*)}
+		\setlist[enumerate,2]{label=\alph*)}
+		\setlist[enumerate,3]{label=(\roman*)}
+		\setlist[enumerate,4]{label=(\arabic*)}
+		\setlist[enumerate,5]{label=(\Alph*)}
+		\setlist[enumerate,6]{label=(\Roman*)}
+		\setlist[enumerate,7]{label=\arabic*}
+		\setlist[enumerate,8]{label=\alph*}
+		\setlist[enumerate,9]{label=\roman*}
+
+\renewlist{itemize}{itemize}{9}
+		\setlist[itemize]{label=$\cdot$}
+		\setlist[itemize,1]{label=\textbullet}
+		\setlist[itemize,2]{label=$\circ$}
+		\setlist[itemize,3]{label=$\ast$}
+		\setlist[itemize,4]{label=$\dagger$}
+		\setlist[itemize,5]{label=$\triangleright$}
+		\setlist[itemize,6]{label=$\bigstar$}
+		\setlist[itemize,7]{label=$\blacklozenge$}
+		\setlist[itemize,8]{label=$\prime$}
+
+\setlength{\topsep}{0pt}\setlength{\parindent}{0pt}
+
+ %%%%%%%%%%%%  This sets linespacing (verticle gap between Lines) Default=1 %%%%%%%%%%%%%%
+
+
+\renewcommand{\arraystretch}{1.3}
+
+
+%%%%%%%%%%%%%%%%%%%% Document code starts here %%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\section*{PPSI}
+\addcontentsline{toc}{section}{PPSI}
+\setlength{\parskip}{12.0pt}
+\textbf{Członkowie}:
+\setlength{\parskip}{0.0pt}
+\begin{itemize}
+	\item \href{https://github.com/PiotrTekieli}{\textcolor[HTML]{1155CC}{\ul{Piotr Tekieli}}}\  
+	\item \href{https://github.com/sam21401}{\textcolor[HTML]{1155CC}{\ul{Samuel Leonczyk}}}\  
+\setlength{\parskip}{12.0pt}
+	\item \href{https://github.com/Prestionyk}{\textcolor[HTML]{1155CC}{\ul{Mariusz Skuza}}}\  
+\end{itemize}
+
+\vspace{\baselineskip}
+{\fontsize{18pt}{21.6pt}\selectfont \textbf{Projekt aplikacji forum internetowe}}
+
+\vspace{\baselineskip}
+Spis treści
+\setlength{\parskip}{0.0pt}
+\begin{enumerate}
+	\item Opis funkcjonalny systemu.
+	\item Wyszczególnione wdrożone kwalifikacje.
+	\item Streszczenie opisu technologicznego.
+	\item Instrukcja lokalnego uruchomienia systemu.
+\setlength{\parskip}{12.0pt}
+	\item Wnioski projektowe.
+\end{enumerate}
+\textbf{1. Opis funkcjonalny systemu:} 
+Jest to aplikacja internetowa w postaci forum, która pozwala tworzyć wątki, edytować je i usuwać oraz dodawać do nich komentarze.
+
+\vspace{\baselineskip}
+\textbf{2. Wyszczególnione wdrożone kwalifikacje:}
+\setlength{\parskip}{0.0pt}
+\begin{enumerate}
+	\item HTML5 - jest jako niezbędny element do wyświetlania treści na stronie.
+	\item CSS3 - formatowanie treści za pomocą bootstrap 4.
+	\item Formularze - wykorzystane do tworzenia użytkownika, komentarzy oraz samych postów.
+	\item Baza danych - połączenie z lokalną bazą danych, w której przechowywane są użytkownicy, komentarze oraz posty.
+	\item Router - wykorzystanie RouteAttribiute to zarządzania ścieżkami dostępu.
+	\item Uwierzytelnianie - rejestracja i logowanie uztkownikó za pomocą ASP.NET Identity.
+	\item MVC - wykorzystanie wzorca mvc w celu łatwiejszej lokalizacji elementów projektu systemu internetowego poprzez dzielenie aplikacji na wyspecjalizowane części.
+	\item CRUD - tworzenie komentarzy, postów oraz ich edycja, usuwanie i przeglądanie. \tab 
+	\item ORM - wykorzystanie Package Manager Console do zmigrowania modeli systemu do bazy danych oraz używanie programowania obiektowego do manipulowania danych z bazy danych.
+	\item Wystawianie API - umożliwiamy pobranie danych o wątkach i komentarzach.\tab 
+	\item Konsumowanie API - jest możliwość wybrania miasta aby sprawdzić jego aktualną temperaturę przy wykorzystaniu API z openweathermap.
+	\item AJAX - asynchroniczne zapytania pozwalają na szybkie wyświetlanie nowych \tab stron komentarzy bez konieczności odświeżania całej strony.
+	\item Mail - Możliwość wysłania maila przez protokół SMTP wykorzystując \tab skonfigurowaną pocztę gmail.
+	\item Lokalizacja - brak.
+	\item RWD - strona poprawnie wyświetla się na wielu różnych rozdzielczościach.
+	\item Logger - prosty logger z biblioteki Microsoft.Extensions.Logging, który pozwala monitorować aktywność na naszej stronie.
+	\item Cache \tab - informacje o wątkach będą pobierane najczęściej co 5 sekund, ponieważ serwer je zapisuje, aby zmniejszyć obciążenie na serwerze.
+	\item System zarządzania zależnościami - brak.
+	\item Automatyzacja - brak.
+\setlength{\parskip}{12.0pt}
+	\item SEO\ - poprawne tytuły, słowa kluczowe i opisy dla stron w formie meta tagów, aby pomóc wyszukiwarkom poprawnie znaleźć i opisać strony.  
+\end{enumerate}
+\textbf{3. Streszczenie opisu technologicznego}
+Frontend i backend jest oparty na frameworku ASP.NET MVC w wersji 5. Pliki wyświetlające treść na stronie są zapisane za pomocą Razor, który jest połączeniem języków C$\#$  i HTML. Pozwala na wykorzystywanie metod i funkcji C$\#$  przy renderowaniu strony HTML. Dodatkowo frontend używa biblioteki CSS Bootstrap.
+
+\vspace{\baselineskip}
+
+\vspace{\baselineskip}
+
+\vspace{\baselineskip}
+
+\vspace{\baselineskip}
+\textbf{4. Instrukcje lokalnego uruchomienia systemu}
+Aby móc korzystać z aplikacji, należy sklonować repozytorium. Następnie otworzyć projekt w Visual Studio. Aby aplikacja działała poprawnie, należy mieć zainstalowany dodatek:
+
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 1 starts here %%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\begin{Center}
+		\includegraphics[width=4.24in,height=1.05in]{./media/image2.png}
+	\end{Center}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 1 Ends here %%%%%%%%%%%%%%%%%%%%
+
+
+\vspace{\baselineskip}oraz NET 5.0 SDK ze strony Microsoft\href{https://dotnet.microsoft.com/download}{ }\href{https://dotnet.microsoft.com/download}{\textcolor[HTML]{1155CC}{\ul{https://dotnet.microsoft.com/download}}} Następnie przechodzimy do Package Manager Console i komendą "add-migration [nazwa]" oraz "update-database" i uruchamiamy projekt.
+
+\vspace{\baselineskip}
+\textbf{5. Podsumowanie/wnioski projektu}
+Projekt został wykonany we frameworku ASP.NET MVC. Początki były trudne, ponieważ nigdy wcześniej nie mieliśmy kontaktu z takim zadaniem, ale z biegiem czasu praca stawała się coraz przyjemniejsza. Framework ma bardzo dużo wbudowanych funkcjonalności, które przyśpieszają pracę. Wcześniej nie mieliśmy również kontaktu z bibliotekami CSS takimi jak bootstrap. Bootstrap okazał się bardzo przydatny i przyjemny w użyciu. Poniżej przykładowy ss z aplikacji:
+
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 2 starts here %%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\begin{Center}
+		\includegraphics[width=6.27in,height=3.53in]{./media/image1.png}
+	\end{Center}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 2 Ends here %%%%%%%%%%%%%%%%%%%%
+
+
+\vspace{\baselineskip}\printbibliography
+\end{document}

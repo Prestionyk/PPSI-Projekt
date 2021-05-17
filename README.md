@@ -1,5 +1,4 @@
 # PPSI
-Grupa: ?
 
 **Członkowie**:  
   * [Piotr Tekieli](https://github.com/PiotrTekieli)  
@@ -14,11 +13,14 @@ Spis treści
 
 1. Opis funkcjonalny systemu.
 2. Wyszczególnione wdrążone kwalifikacje.
+3. Streszczenie opisu technologicznego.
+4. Instrukcja lokalnego uruchomienia systemu.
+5. Wnioski projektowe.
 
-**Opis funkcjonalny systemu:**
+**1.Opis funkcjonalny systemu:**
 Jest to aplikacja internetowa w postaci forum, która pozwala tworzyć wątki, edytować je i usuwać oraz dodawać do nich komentarze.
 
-**Wyszczególnione wdrążone kwalifikacje:**
+**2.Wyszczególnione wdrążone kwalifikacje:**
 1. HTML5 - jest jako niezbędny element do wyświetlania treści na stronie.
 2. CSS3 - formatowanie treści za pomocą boostrap 4.
 3. Formularze - wykorzystane do tworzenia użytkownika, komentarzy oraz samych postów.
@@ -40,10 +42,10 @@ Jest to aplikacja internetowa w postaci forum, która pozwala tworzyć wątki, e
 19. Automatyzacja - brak.
 20. SEO - poprawne tytuły, słowa kluczowe i opisy dla stron w formie meta tagów, aby pomóc wyszukiwarkom poprawnie znaleźć i opisać strony.
 
-**Streszczenie opisu technologicznego**
+**3.Streszczenie opisu technologicznego**
 Frontend i backend jest oparty na frameworku ASP.NET MVC w wersji 5. Pliki wyświetlające treść na stronie są zapisane za pomocą Razor, który jest połączeniem języków C# i HTML. Pozwala na wykorzystywanie metod i funkcji C# przy renderowaniu strony HTML. Dodatkowo frontend używa biblioteki CSS Boostrap. 
 
-**Instrukcje lokalnego uruchomienia systemu**
+**4.Instrukcje lokalnego uruchomienia systemu**
 
 Aby móc korzystac z aplikacji, należy sklonować repozytorium. Następnie otworzyć projekt w Visual Studio. 
 Aby aplikacja działała poprawnie, należy mieć zainstalowany dodatek:
@@ -52,7 +54,7 @@ Aby aplikacja działała poprawnie, należy mieć zainstalowany dodatek:
 oraz NET 5.0 SDK ze strony Microsoft https://dotnet.microsoft.com/download
 Następnie przechodzimy do Packet Menager Console i komendą "add-migration {nazwa}" oraz "update-database" i uruchamiamy projekt.
 
-**Podsumowanie/wnioski projektu**
+**5.Podsumowanie/wnioski projektu**
 
 Projekt został wykonany we frameworku ASP.NET MVC. Początki były trudne, ponieważ nigdy wcześniej nie mielismy kontaktu z takim zadaniem, ale z biegem czasu praca stawała sie coraz przyjemniejsza. Framework ma bardzo dużo wbudowanych funkcjonalności, które przyśpieszają pracę. Wcześniej nie mieliśmy różnież kontaktu z bibliotekami CSS takimi jak boostrap. Boostrap okazał sie bardzo przydatny i przyjemny w użyciu. Poniżej przykładowy ss z aplikacji:
 ![Bez tytułu](https://user-images.githubusercontent.com/72551592/118408758-315dc080-b687-11eb-8908-b301c41e9a8f.png)
